@@ -12,8 +12,7 @@ exports.handle_login = function (req, res) {
   // res.redirect("/new");
   res.render("newEntry", {
     title: "Guest Book",
-    user: "user",
-    //user: req.cookies.jwt.username,
+    user: "user"
   });
 };
 
