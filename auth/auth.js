@@ -19,7 +19,7 @@ exports.login = function (req, res,next) {
     bcrypt.compare(password, user.password, function (err, result) {
       if (result) {
         //use the payload to store information about the user such as username.
-        let payload = { username: user.username };
+        let payload = { username: username };
         //create the access token 
         let accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET,{expiresIn: 300}); 
         res.cookie("jwt", accessToken);
