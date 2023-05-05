@@ -5,27 +5,24 @@
 <body class="container">
 <h2>Write a new entry</h2>
 <div class="text-right" style="margin-bottom: 1em;">
-{{^user}}
-  <a id="login" href="/register" class="btn btn-primary">
-    Register
-  </a>
-  <a id="login" href="/login" class="btn btn-primary">
-    Sign in
-  </a>
-{{/user}}
-{{#user}}
-
+  <% if (!username == username) { %>
+    <a id="login" href="/login" class="btn btn-primary">
+      Sign in
+    </a>
+  <%  } else { %>
+    <a id="logout" href="/main" class="btn btn-primary">
+      dashboard
+    </a>
   <a id="logout" href="/logout" class="btn btn-primary">
     Sign out
   </a>
-{{/user}}
+  <%  } %>
+        
 </div>
 <form method="post" role="form" action="/new">
 <div class="form-group">
 <label for="author">Author</label>
-<input type="text" class="form-control" id="author"
-name="author" placeholder="Enter a subject line"
-required>
+<input type="text" class="form-control" id="author" name="author" placeholder="Enter a subject line" value="<%= username %>" required>
 </div>
 <div class="form-group">
 <label for="subject">Subject</label>

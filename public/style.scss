@@ -1,0 +1,42 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+footer {
+    border: none;
+    background-color: #AEEA00;
+}
+
+.main--wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.wrapper {
+    background-color: #AEEA00;
+}
+
+.register--form {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.register-btn {
+    border: none;
+    background-color: #AEEA00;
+}
+
+
+.profile {
+    padding: 2rem;
+}
+
+.main {
+    padding: 3rem;
+    flex: 2;
+}

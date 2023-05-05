@@ -1,58 +1,91 @@
 const guestbookDAO = require("../models/guestbookModel");
-const userDao = require("../models/userModel.js");
-
+const GuestBook = require("../models/guestbookModel");
+const Users = require("../models/userModel.js");
 const db = new guestbookDAO();
 db.init();
 
-exports.show_login = function (req, res) {
-  res.render("user/login");
+exports.show_login = async function (req, res) {
+  await db.getAllEntries().then((entries) => {
+    res.render("entries", {
+      title: "Guest Book",
+      username: req.cookies['username'],
+      entries: entries,
+    });
+    console.log(username, "show_login")
+  })
+  .catch((err) => {
+    console.log("show_login promise rejected", err);
+    console.log(JSON.stringify(err));
+  });
+  return res.render("login");
+};
+
+exports.dashboard = async function (req, res) {
+  await db.getAllEntries().then((entries) => {
+        res.render("entries", {
+          title: "Guest Book",
+          username: req.cookies['username'],
+          entries: entries,
+        });
+        console.log(username, 'dashboard')
+      })
+      .catch((err) => {
+        console.log("dashboard promise rejected", err);
+        console.log(JSON.stringify(err));
+      });
+   return res.render("entries");
 };
 
 exports.handle_login = function (req, res) {
-  // res.redirect("/new");
-  res.render("newEntry", {
-    title: "Guest Book",
-    user: "user"
+  db.getAllEntries()
+  .then((entries) => {
+    res.render("entries", {
+      title: "Guest Book",
+      username: req.cookies['username'],
+      entries: entries,
+    });
+    console.log("handle_login promise resolved");
+  })
+  .catch((err) => {
+    console.log("handle_login promise rejected", err);
   });
+
 };
 
 exports.landing_page = function (req, res) {
-  db.getAllEntries()
-    .then((list) => {
-      res.render("entries", {
-        title: "Guest Book",
-        entries: list,
-      });
-    })
-    .catch((err) => {
-      console.log("promise rejected", err);
-    });
+  return res.render('login', {
+    title: "Home",
+    url: req.url,
+    username: req.cookies['username']
+  })
 };
 
+
 exports.show_new_entries = function (req, res) {
-  res.render("newEntry", {
+    return res.render("newEntry", {
     title: "Guest Book",
-    user: "user",
+    username: req.cookies['username'] 
   });
 };
 
-exports.post_new_entry = function (req, res) {
-  console.log("processing post-new_entry controller");
+exports.createNewPost = function (req, res) {
+  console.log("processing createNewPost controller");
   if (!req.body.author) {
-    response.status(400).send("Entries must have an author.");
+    res.status(400).send("Entries must have an author.");
     return;
   }
   db.addEntry(req.body.author, req.body.subject, req.body.contents);
-  res.redirect("/loggedIn");
+  return res.redirect("/loggedIn");
 };
 
 exports.show_user_entries = function (req, res) {
+  console.log("show_user_entries", req.params.author);
   let user = req.params.author;
   db.getEntriesByUser(user)
     .then((entries) => {
       res.render("entries", {
         title: "Guest Book",
-        user: "user",
+        username: req.cookies['username'],
         entries: entries,
       });
     })
@@ -63,42 +96,63 @@ exports.show_user_entries = function (req, res) {
 };
 
 exports.show_register_page = function (req, res) {
-  res.render("user/register");
+  return res.render("register");
 };
 
-exports.post_new_user = function (req, res) {
-  const user = req.body.username;
-  const password = req.body.pass;
+exports.registerNewUser = async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email
 
-  if (!user || !password) {
-    res.send(401, "no user or no password");
-    return;
+  if (!username || !password) {
+    return res.send(401, "no username or no password");
   }
-  userDao.lookup(user, function (err, u) {
+    Users.lookup(username, function (err, u) {
     if (u) {
-      res.send(401, "User exists:", user);
-      return;
+      console.log(err)
+      return res.status(400).send({"User Exists": username});
     }
-    userDao.create(user, password);
-    console.log("register user", user, "password", password);
-    res.redirect("/login");
-  });
-};
+    Users.create(req.body.username, req.body.password, req.body.email)
+    db.getAllEntries()
+    .then((entries) => {
+      res.render("entries", {  
+        title: "Guest Book",
+        username: req.cookies['username'],
+        entries: entries })
+      })
+      .catch((err) => {
+        console.log("registerNewUser promise rejected", err);
+      });
+       console.log("register user", username, "password", password, "email", email);
+       console.log('registered')
+    })
+  }
 
 exports.loggedIn_landing = function (req, res) {
   db.getAllEntries()
-    .then((list) => {
+    .then((entries) => {
       res.render("entries", {
         title: "Guest Book",
-        user: "user",
-        entries: list,
+        username: req.cookies['username'],
+        entries: entries,
       });
     })
     .catch((err) => {
       console.log("promise rejected", err);
+      return res.redirect("/main")
     });
 };
 
 exports.logout = function (req, res) {
-  res.clearCookie("jwt").status(200).redirect("/");
+  res.clearCookie("username")
+  return res.clearCookie("jwt").status(200).redirect("/");
 };
+
+exports.delete = function(req, res) {
+  db.remove(req.params._id, req.params.author).then(()=> {
+    return res.redirect("/main")
+  }).catch((err) => {
+    console.log("promise rejected", err);
+    return res.redirect("/main")
+  })
+}

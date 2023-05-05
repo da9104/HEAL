@@ -1,0 +1,39 @@
+<style>
+  div.card {
+    background-color: #F7F7F7;
+    border: none;
+  }
+
+  div.card-footer {
+    background-color: #F7F7F7;
+    border: none;
+  }
+</style>
+
+<h4>WHAT’S on your mind? share your motivation</h4>
+
+<% Promise.resolve(entries.forEach(function(entry) { %>
+
+<div class="card">
+  <div class="card-body shadow-sm">
+    <h4 class="card-title">
+      <%= entry.subject %></h4>
+    <p class="card-text">
+      <%= entry.contents %>
+    </p>
+  <div class="card-footer">
+  <p class="text-right"> Written by <a href="/posts/<%= entry.author %>">  <%= entry.author %> </a> , on  <%= entry.published %> </p>
+</div>
+</div>
+    
+    <% if (entry.length == 0) { %>
+
+        No entries yet.
+
+    <% } %>
+
+ <% })) %> 
+
+
+
+
