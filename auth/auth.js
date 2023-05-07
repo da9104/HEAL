@@ -6,13 +6,13 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
-const cookieExtractor = (req) => {
-  let token = null;
-  if (req && req.cookies) {
-    token = req.cookies['jwt'];
-  }
-  return token;
-};
+// const cookieExtractor = (req) => {
+//   let token = null;
+//   if (req && req.cookies) {
+//     token = req.cookies['jwt'];
+//   }
+//   return token;
+// };
 
 const opts = {
  // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

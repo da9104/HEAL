@@ -1,20 +1,13 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser')
-const path = require('path');
+// const path = require('path');
 const router = require('./routes/guestbookRoutes');
+const sanitizeHTML = require('sanitize-html')
 const cors = require("cors");
 require('dotenv').config() // loads data from .env file
 let { MongoClient, ObjectId } = require("mongodb")
 let db
-const server = require("http").createServer(app);
-
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
-});
 
 app.use(cookieParser())
 app.use(express.json());
@@ -104,6 +97,29 @@ app.post("/delete-item", async function (req, res) {
 
 app.use('/', router);
 
-// app.listen(process.env.PORT || 3000, () => {
-//     console.log('Server started. Ctrl^c to quit.');
-//  })  
+
+const server = require('http').createServer(app)
+// const io = require('socket.io')(server)
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.use(function(socket, next) {
+    sessionOptions(socket.request, socket.request.res, next)
+})
+
+io.on('connection', function(socket) {
+   if (socket.request.cookies.username) {
+        let user = socket.request.cookies.username
+        socket.emit('welcome', {username: username})
+        socket.on('chatMessageFromBrowser', function(data) {
+        // console.log(data.message)
+        socket.broadcast.emit('chatMessageFromServer', {message: sanitizeHTML(data.message, {allowedTags: [], allowedAttributes: {}}), username: username.username })
+        })
+   }
+})
+
+module.exports = server

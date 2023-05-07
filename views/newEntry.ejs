@@ -1,23 +1,7 @@
-<html lang="en">
-<head>
-{{>header}}
-</head>
+<%- include('includes/header_main') %>
+
 <body class="container">
 <h2>Write a new entry</h2>
-<div class="text-right" style="margin-bottom: 1em;">
-  <% if (!username == username) { %>
-    <a id="login" href="/login" class="btn btn-primary">
-      Sign in
-    </a>
-  <%  } else { %>
-    <a id="logout" href="/main" class="btn btn-primary">
-      dashboard
-    </a>
-  <a id="logout" href="/logout" class="btn btn-primary">
-    Sign out
-  </a>
-  <%  } %>
-        
 </div>
 <form method="post" role="form" action="/new">
 <div class="form-group">
@@ -41,5 +25,7 @@ required>
 <input type="submit" value="Post entry" class="btn btn-primary">
 </div>
 </form>
-</body
-</html>
+
+<%- include('includes/footer') %>
+
+

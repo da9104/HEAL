@@ -2,12 +2,24 @@ const guestbookDAO = require("../models/guestbookModel");
 const GuestBook = require("../models/guestbookModel");
 const Users = require("../models/userModel.js");
 const db = new guestbookDAO();
+const jwt = require('jsonwebtoken')
+
 db.init();
+
+exports.apiMustBeLoggedIn = function(req, res, next) {
+  try { 
+   req.apiUser = jwt.verify(req.body.token, process.env.SECRET)
+   next()
+  } catch {
+    res.json("You must provide a valid token.")
+  }
+}
 
 exports.show_login = async function (req, res) {
   await db.getAllEntries().then((entries) => {
+    let user = new User(req.body)
     res.render("entries", {
-      title: "Guest Book",
+      title: "Home",
       username: req.cookies['username'],
       entries: entries,
     });
@@ -17,7 +29,7 @@ exports.show_login = async function (req, res) {
     console.log("show_login promise rejected", err);
     console.log(JSON.stringify(err));
   });
-  return res.render("login");
+  return res.render("login", { title: "Home", username: req.cookies['username']  });
 };
 
 exports.dashboard = async function (req, res) {
@@ -96,7 +108,11 @@ exports.show_user_entries = function (req, res) {
 };
 
 exports.show_register_page = function (req, res) {
-  return res.render("register");
+  return res.render("register", {
+    title: "Home",
+    url: req.url,
+    username: req.cookies['username']
+  })
 };
 
 exports.registerNewUser = async (req, res) => {
@@ -116,7 +132,7 @@ exports.registerNewUser = async (req, res) => {
     db.getAllEntries()
     .then((entries) => {
       res.render("entries", {  
-        title: "Guest Book",
+        title: "Register",
         username: req.cookies['username'],
         entries: entries })
       })

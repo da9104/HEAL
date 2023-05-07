@@ -9,11 +9,17 @@
   justify-content: center;
 }
 
-.profile--card {
-
+.quickmenu .menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-.profile--card-sub {
-  /* padding: 50px; */
+
+.menu li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 ul li {
@@ -22,10 +28,72 @@ ul li {
   padding-right: 50px;
 }
 
+i {
+  border-radius: 50px;
+  border: 50px solid gray;
+}
+
 #avatar {
   margin: 0 auto;
 }
+
+#infoFloatingButton {
+	position: fixed;
+	bottom: 25px;
+	right: 25px;
+	width: 60px;
+	height: 60px;
+	background-color: #25d366;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	z-index: 1000;
+	animation: whatsappButtonAnimation 0.5s;
+}
+  
+#infoFloatingButton svg {
+	width: 36px;
+	fill: #fff;
+}
+  
+@-webkit-keyframes infoFloatingButton {
+	0% {
+		transform: scale3d(0, 0, 0);
+		transition: transform 0.3s ease-in-out;
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+		transition: transform 0.5s cubic bezier(0.18, 0.89, 0.32, 1.28);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#infoFloatingButton {
+		width: 36px;
+		height: 36px;
+	}
+
+	#infoFloatingButton svg {
+		width: 20px;
+	}
+}
+
+#main-chat-icon {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  right: 10px;
+}
+
 </style>
+
+<span id="infoFloatingButton"> 
+  <svg viewBox="0 0 399 400" class="partSvg whatsAppAlt">
+    <span id="main-chat-icon" class="text-white main-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-comment"></i></span> 
+  </svg>
+</span>
 
 <div>
     <div class="main--wrapper">
@@ -54,19 +122,60 @@ ul li {
             <div class="card--todo">
             <p>  WHAT’S YOUR GOAL TODAY? </p>
             <embed src="/todo"
-                   width="500"
-                   height="auto"
-                   onerror="alert('URL invalid !!');"/>
+                   onerror="alert('URL invalid !!');"
+                   style="overflow: hidden; 
+                   height: 30%;
+                   width: 100%;"
+                   />
             </div>
 
                 <div class="card--entry">
                   <%- include('cards') %>
                 </div>   
 
+                <div class="quickmenu">
+
+                  <ul class="menu">
+                    <li>
+                    <span  style="border-radius: 10px;
+                    border: 10px solid #F7F7F7; transform: rotate(45);">
+                   <i class="fas fa-medkit" style="background-color: transparent;"></i>  
+                   </span>  
+                      Health
+                  </li>
+                    <li>
+                      <span  style="border-radius: 10px;
+                      border: 10px solid #F7F7F7; transform: rotate(45);">
+                      <i class="fas fa-heart" style="background-color: transparent;"></i>
+                    </span> 
+                      Nutrition
+                  </li>
+                    <li>
+                      <span  style="border-radius: 10px;
+                      border: 10px solid #F7F7F7; transform: rotate(45);">
+                       <i class="fas fa-bicycle" style="background-color: transparent;"></i>
+                    </span> 
+                      Fitness
+                    </li>
+                    <li>
+                      <span  style="border-radius: 10px;
+                      border: 10px solid #F7F7F7; transform: rotate(45);">
+                      <i class="fas fa-utensils"></i>
+                    </span> 
+                      Food
+                    </li>
+                  </ul>
+
+                </div>
+
           </div>
 
     </div>
 </div>
+
+<div id="chat-wrapper" class="chat-wrapper shadow border-top border-left border-right"> </div>
+<script src="/socket.io/socket.io.js"> </script>
+
 
  <%- include('includes/footer') %>
 

@@ -2,8 +2,8 @@ function itemTemplate(item) {
    return `<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
    <span class="item-text">${item.text}</span>
    <div>
-     <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1"><i class="fa-regular fa-pen-to-square"></i></button>
-     <button data-id="${item._id}" class="delete-me btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+     <a data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1"><i class="fa-regular fa-pen-to-square"></i></a>
+     <a data-id="${item._id}" class="delete-me btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
    </div>
  </li>`
 }
@@ -55,3 +55,5 @@ document.addEventListener("click", function(e) {
      }
     }
 })
+
+

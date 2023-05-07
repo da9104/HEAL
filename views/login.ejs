@@ -1,5 +1,11 @@
 <%- include('includes/header') %>
 
+<style>
+  .wrapper {
+    padding-bottom: 50px;
+  }
+</style>
+
 <div class="wrapper">
 <div class="container py-md-5 ">
 
@@ -10,10 +16,10 @@
       <p class="lead text-muted">Are you sick of short tweets and impersonal &ldquo;shared&rdquo; posts that are reminiscent of the late 90&rsquo;s email forwards? We believe getting back to actually writing is the key to enjoying the internet again.</p>
     </div>
 
-    <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5">
+    <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5 ">
 
       <div class="register--form">
-      <form action="/register" method="POST" id="registration-form">
+      <form action="/register" method="POST" id="registration-form" class="">
           <div class="form-group">
             <label for="username-register" class="text-muted mb-1"><small>Username</small></label>
             <input name="username" id="username-register" class="form-control" type="text" placeholder="Pick a username" autocomplete="off">
@@ -27,9 +33,9 @@
             <label for="password-register" class="text-muted mb-1"><small>Password</small></label>
             <input name="password" id="password-register" class="form-control" type="password" placeholder="Create a password">
           </div>
-          
-          <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block register-btn">Create account today</button>
-            <p class="mt-4 text-center"> Already have an account? Log in </p>
+
+          <button type="submit" class="py-3 mt-4 btn btn-lg btn-success register-btn align-items-center">Create account today</button>
+            <p class="mt-4 text-center"> Already have an account? <a href="/register" style="font-weight: 700;">Log in</a></p>
         </form>
       </div>
 
@@ -38,4 +44,9 @@
   </div>
 </div>
  
+
+<div id="chat-wrapper" class="chat-wrapper shadow border-top border-left border-right"> </div>
+<script src="/socket.io/socket.io.js"> </script>
+
+
 <%- include('includes/footer') %>

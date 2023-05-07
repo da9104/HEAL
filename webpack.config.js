@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: './front-js/main.js',
+  entry: '/front-js/main.js',
   output: {
     filename: 'main-bundled.js',
     path: path.resolve(__dirname, 'public')
