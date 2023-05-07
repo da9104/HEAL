@@ -1,0 +1,86 @@
+<%- include('includes/header') %>
+
+<style>
+  .wrapper {
+    padding-bottom: 50px;
+  }
+  #infoFloatingButton {
+	position: fixed;
+	bottom: 25px;
+	right: 25px;
+	width: 60px;
+	height: 60px;
+	background-color: #25d366;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	z-index: 1000;
+	animation: whatsappButtonAnimation 0.5s;
+}
+  
+#infoFloatingButton svg {
+	width: 36px;
+	fill: #fff;
+}
+  
+@-webkit-keyframes infoFloatingButton {
+	0% {
+		transform: scale3d(0, 0, 0);
+		transition: transform 0.3s ease-in-out;
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+		transition: transform 0.5s cubic bezier(0.18, 0.89, 0.32, 1.28);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#infoFloatingButton {
+		width: 36px;
+		height: 36px;
+	}
+
+	#infoFloatingButton svg {
+		width: 20px;
+	}
+}
+
+#main-chat-icon {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  right: 10px;
+}
+
+</style>
+
+<span id="infoFloatingButton"> 
+    <svg viewBox="0 0 399 400" class="partSvg whatsAppAlt">
+      <span id="main-chat-icon" class="text-white main-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-comment"></i></span> 
+    </svg>
+  </span>
+
+<div class="wrapper">
+<div class="container py-md-5 ">
+
+  <div class="row align-items-center">
+    <div class=" py-3">
+      <h1 class="display-3">HEAL, The healthy guide is here!</h1>      
+      <p class="lead text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur quam ipsam error voluptate? Nisi harum aspernatur repellat eum, veniam asperiores modi tenetur ex minus quas nostrum in a officia quis.</p>
+  
+      about page.
+        
+    </div>
+
+    </div>
+  </div>
+</div>
+ 
+
+<div id="chat-wrapper" class="chat-wrapper shadow border-top border-left border-right"> </div>
+<script src="/socket.io/socket.io.js"> </script>
+
+
+<%- include('includes/footer') %>

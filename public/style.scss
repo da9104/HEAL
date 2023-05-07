@@ -176,3 +176,11 @@ textarea.tall-textarea {
     font-size: .75rem;
   }
   
+
+
+  @media (min-width: 768px) {
+    .entries--page {
+        display: flex;
+        flex-direction: column;
+    }
+  }

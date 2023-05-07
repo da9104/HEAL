@@ -20,12 +20,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 5px;
 }
 
 ul li {
   margin: 0 auto;
   list-style: none;
   padding-right: 50px;
+  text-align: center;
 }
 
 i {
@@ -95,19 +97,18 @@ i {
   </svg>
 </span>
 
-<div>
+<div class="entries--page">
     <div class="main--wrapper">
           <div class="profile">
 
-            <div class="col-lg-4 flex-column profile--card">
-              <svg id="avatar" class="bd-placeholder-img rounded-circle" width="60" height="60" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-              </svg>
+            <div class=" d-flex flex-column profile--card align-items-center text-center">
+              <i class="fas fa-user-circle"></i>
+              
               <div class="profile--card-sub">
               <h4 class="fw-normal"><%= username %></h4>
-              <ul>
-                <li>create post</li>
-                <li>about us</li>
+              <ul class="py-3">
+                <li><a href="/new">create post</a></li>
+                <li><a href="/about">about us </a></li>
                 <li>information</li>
               </ul>
               <p><a class="btn btn-secondary" href="/logout">Sign out</a></p>

@@ -171,4 +171,11 @@ textarea.tall-textarea {
   border: none;
   outline: none;
   font-size: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .entries--page {
+    display: flex;
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=style.css.map */

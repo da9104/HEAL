@@ -26,6 +26,9 @@ router.post('/notLoggedIn', function(req, res, next) {
   });
   
 router.get("/main", controller.dashboard);
+router.get("/about", function(req, res, next) {
+    return res.render('about');
+  });
 router.get('/new', controller.show_new_entries);
 router.post('/new', verify, controller.createNewPost);
 router.get('/posts/:author', controller.show_user_entries);
